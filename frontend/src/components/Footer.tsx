@@ -10,6 +10,10 @@ const Footer = () => {
 					<p className="cursor-pointer">Terms of Service</p>
 				</span>
 			</div>
+			<div className="text-white font-bold tracking-tight text-center mt-5">
+				Made with ❤️ by &nbsp;
+				<a href="https://github.com/Fahim047">Fahimul Islam</a>
+			</div>
 		</div>
 	);
 };
