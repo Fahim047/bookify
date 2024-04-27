@@ -30,7 +30,9 @@ const SearchBar = () => {
 	const handleClear = () => {
 		setDestination('');
 		setCheckIn(new Date());
-		setCheckOut(new Date());
+		const tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		setCheckOut(tomorrow);
 		setAdultCount(1);
 	};
 
@@ -116,7 +118,7 @@ const SearchBar = () => {
 				<button
 					type="button"
 					className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500"
-					onClick={handleClear} // Attach handleClear function to onClick event
+					onClick={handleClear}
 				>
 					Clear
 				</button>
