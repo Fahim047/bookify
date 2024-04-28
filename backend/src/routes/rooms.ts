@@ -77,13 +77,13 @@ router.get(
 
 router.get('/:roomId', async (req: Request, res: Response) => {
 	const roomId = req.params.roomId.toString();
-	console.log(roomId);
+	// console.log(roomId);
 	try {
 		const room = await Room.findOne({
 			_id: roomId,
 			// hotelId: req.userId,
 		});
-		console.log(room);
+		// console.log(room);
 		res.json(room);
 	} catch (error) {
 		res.status(500).json({ message: 'Error fetching room!' });
@@ -91,8 +91,7 @@ router.get('/:roomId', async (req: Request, res: Response) => {
 });
 
 router.put(
-	'/:roomId',
-	verifyToken,
+	'/edit/:roomId',
 	upload.array('imageFiles'),
 	async (req: Request, res: Response) => {
 		try {
@@ -102,7 +101,7 @@ router.put(
 			const room = await Room.findOneAndUpdate(
 				{
 					_id: req.params.roomId,
-					// userId: req.userId,
+					// hotelId: req.params.hotelId,
 				},
 				updatedRoom,
 				{ new: true }
@@ -123,7 +122,7 @@ router.put(
 			await room.save();
 			res.status(201).json(room);
 		} catch (error) {
-			res.status(500).json({ message: 'Something went throw' });
+			res.status(500).json({ message: 'Something went wrong!' });
 		}
 	}
 );

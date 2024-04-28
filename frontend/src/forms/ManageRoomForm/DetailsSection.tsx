@@ -1,7 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 import { RoomFormData } from './ManageRoomForm';
 
-const DetailsSection = () => {
+type Props = {
+	roomId?: string;
+};
+const DetailsSection = ({ roomId }: Props) => {
 	const {
 		register,
 		formState: { errors },
@@ -9,7 +12,9 @@ const DetailsSection = () => {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<h1 className="text-3xl font-bold mb-3">Add Room</h1>
+			<h1 className="text-3xl font-bold mb-3">
+				{roomId ? 'Edit Room' : 'Add Room'}
+			</h1>
 			<label className="text-gray-700 text-sm font-bold flex-1">
 				Room Number
 				<input

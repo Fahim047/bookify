@@ -16,9 +16,10 @@ import HotelDetails from './pages/HotelDetails';
 import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings';
 import Home from './pages/Home';
-import MyHotelRooms from './components/MyHotelRooms';
+import MyHotelRooms from './pages/MyHotelRooms';
 import AddRoom from './pages/AddRoom';
 import RoomDetails from './pages/RoomDetails';
+import EditRoom from './pages/EditRoom';
 
 const App = () => {
 	const { isLoggedIn } = useAppContext();
@@ -106,6 +107,14 @@ const App = () => {
 							element={
 								<Layout>
 									<AddRoom />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/edit-hotel/:hotelId/rooms/:roomId/edit"
+							element={
+								<Layout>
+									<EditRoom />
 								</Layout>
 							}
 						/>

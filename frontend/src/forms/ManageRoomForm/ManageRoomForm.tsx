@@ -67,7 +67,7 @@ const ManageRoomForm = ({ onSave, isLoading, room, hotelId }: Props) => {
 	return (
 		<FormProvider {...formMethods}>
 			<form className="flex flex-col gap-10" onSubmit={onSubmit}>
-				<DetailsSection />
+				<DetailsSection roomId={room?._id || ''} />
 				<TypeSection />
 				<FacilitiesSection />
 				<GuestsSection />
