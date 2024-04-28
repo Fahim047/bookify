@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const AddRoom = () => {
 	const { hotelId } = useParams();
-	console.log(hotelId);
+	// console.log(hotelId);
 	const { showToast } = useAppContext();
 
 	const { mutate, isLoading } = useMutation(apiClient.addHotelRoom, {
@@ -24,7 +24,7 @@ const AddRoom = () => {
 
 	return (
 		<ManageRoomForm
-			hotelId={hotelId}
+			hotelId={hotelId || ''}
 			onSave={handleSave}
 			isLoading={isLoading}
 		/>
