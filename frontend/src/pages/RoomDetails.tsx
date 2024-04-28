@@ -46,15 +46,15 @@ const RoomDetails = () => {
 				))}
 			</div>
 
-			<div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+			{/* <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
 				<div className="whitespace-pre-line">{room.description}</div>
-				{/* <div className="h-fit">
+				<div className="h-fit">
 					<GuestInfoForm
 						pricePerNight={room.pricePerNight}
 						roomId={room._id}
 					/>
-				</div> */}
-			</div>
+				</div>
+			</div> */}
 		</div>
 	);
 };

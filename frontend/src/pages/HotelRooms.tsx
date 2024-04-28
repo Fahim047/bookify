@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import * as apiClient from '../api-client';
 const HotelRooms = ({ hotelId }: { hotelId: string }) => {
 	const { data: rooms } = useQuery('fetchQuery', () =>
-		apiClient.fetchRoomsByHotelId(hotelId)
+		apiClient.fetchRoomsByHotelId(hotelId || '')
 	);
 	return (
 		<>
@@ -14,9 +14,11 @@ const HotelRooms = ({ hotelId }: { hotelId: string }) => {
 				</span>
 				<div className="flex gap-4 flex-wrap justify-center items-center">
 					{rooms?.map((room) => (
-						<Link to={`/room-detail/${room._id}`}>
-							<RoomCard key={room._id} room={room} />
-						</Link>
+						<div className="border border-slate-300 rounded-lg p-5">
+							<Link to={`/room-detail/${room._id}`}>
+								<RoomCard key={room._id} room={room} />
+							</Link>
+						</div>
 					))}
 				</div>
 			</div>

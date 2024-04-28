@@ -144,22 +144,22 @@ export const updateMyHotelById = async (hotelFormData: FormData) => {
 
 	return response.json();
 };
-// export const updateMyHotelRoomById = async (roomFormData: FormData) => {
-// 	const response = await fetch(
-// 		`${API_BASE_URL}/api/rooms/${hotelFormData.get('hotelId')}`,
-// 		{
-// 			method: 'PUT',
-// 			body: roomFormData,
-// 			credentials: 'include',
-// 		}
-// 	);
+export const updateMyHotelRoomById = async (roomFormData: FormData) => {
+	const response = await fetch(
+		`${API_BASE_URL}/api/rooms/edit/${roomFormData.get('roomId')}`,
+		{
+			method: 'PUT',
+			body: roomFormData,
+			credentials: 'include',
+		}
+	);
 
-// 	if (!response.ok) {
-// 		throw new Error('Failed to update Hotel');
-// 	}
+	if (!response.ok) {
+		throw new Error('Failed to update Hotel');
+	}
 
-// 	return response.json();
-// };
+	return response.json();
+};
 
 export type SearchParams = {
 	destination?: string;
