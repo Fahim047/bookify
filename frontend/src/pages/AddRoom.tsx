@@ -24,7 +24,7 @@ const AddRoom = () => {
 
 	return (
 		<ManageRoomForm
-			hotelId={hotelId}
+			hotelId={hotelId || ''}
 			onSave={handleSave}
 			isLoading={isLoading}
 		/>

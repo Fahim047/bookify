@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import RoomCard from '../forms/ManageHotelForm/RoomCard';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as apiClient from '../api-client';
 const HotelRooms = ({ hotelId }: { hotelId: string }) => {
 	const { data: rooms } = useQuery('fetchQuery', () =>
