@@ -22,10 +22,20 @@ const MyHotelRooms = () => {
 				<div className="flex gap-4 flex-wrap justify-center items-center mt-6">
 					{rooms?.map((room) => (
 						<div className="border border-slate-300 rounded-lg p-5">
-							<Link to={`/edit-room/${room._id}`}>
-								<RoomCard key={room._id} room={room} />
-							</Link>
+							<RoomCard key={room._id} room={room} />
 							<span className="flex justify-end gap-2">
+								<Link
+									to={`/room-detail/${room._id}`}
+									className="flex
+									bg-blue-600
+									text-white
+									text-xl
+									font-bold
+									p-2
+									hover:bg-blue-500"
+								>
+									View as Guest
+								</Link>
 								<Link
 									to={`/edit-hotel/${hotelId}/rooms/${room._id}/edit`}
 									className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500"

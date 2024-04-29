@@ -1,6 +1,7 @@
 export type UserType = {
 	_id: string;
 	email: string;
+	phoneNumber: string;
 	password: string;
 	firstName: string;
 	lastName: string;
@@ -17,6 +18,7 @@ export type RoomType = {
 	facilities: string[];
 	pricePerNight: number;
 	imageUrls: string[];
+	bookings: BookingType[];
 };
 
 export type HotelType = {
@@ -44,11 +46,14 @@ export type BookingType = {
 	firstName: string;
 	lastName: string;
 	email: string;
+	phoneNumber: string;
 	adultCount: number;
 	childCount: number;
 	checkIn: Date;
 	checkOut: Date;
 	totalCost: number;
+	roomId: string;
+	hotelId: string;
 };
 
 export type HotelSearchResponse = {

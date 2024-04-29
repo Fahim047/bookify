@@ -236,7 +236,6 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
 };
 export const fetchRoomById = async (roomId: string): Promise<RoomType> => {
 	const response = await fetch(`${API_BASE_URL}/api/rooms/${roomId}`);
-	console.log(response);
 	if (!response.ok) {
 		throw new Error('Error fetching room!');
 	}
@@ -269,7 +268,7 @@ export const createPaymentIntent = async (
 
 export const createRoomBooking = async (formData: BookingFormData) => {
 	const response = await fetch(
-		`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+		`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings/${formData.roomId}`,
 		{
 			method: 'POST',
 			headers: {

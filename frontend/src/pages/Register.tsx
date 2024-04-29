@@ -8,6 +8,7 @@ export type RegisterFormData = {
 	firstName: string;
 	lastName: string;
 	email: string;
+	phoneNumber: string;
 	password: string;
 	confirmPassword: string;
 };
@@ -191,6 +192,27 @@ const Register = () => {
 				{errors.email && (
 					<span className="text-red-500 text-xs">
 						{errors.email.message}
+					</span>
+				)}
+			</div>
+			<div className="mb-4">
+				<label
+					htmlFor="phoneNumber"
+					className="text-sm font-bold text-gray-700"
+				>
+					Phone Number
+				</label>
+				<input
+					id="phoneNumber"
+					type="tel" // Using "tel" type for phone number input
+					className="w-full border rounded py-2 px-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500"
+					{...register('phoneNumber', {
+						required: 'This field is required',
+					})}
+				/>
+				{errors.phoneNumber && (
+					<span className="text-red-500 text-xs">
+						{errors.phoneNumber.message}
 					</span>
 				)}
 			</div>

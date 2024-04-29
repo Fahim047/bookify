@@ -2,16 +2,17 @@ import { useMutation } from 'react-query';
 import ManageRoomForm from '../forms/ManageRoomForm/ManageRoomForm';
 import { useAppContext } from '../contexts/AppContext';
 import * as apiClient from '../api-client';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const AddRoom = () => {
 	const { hotelId } = useParams();
-	// console.log(hotelId);
 	const { showToast } = useAppContext();
+	const navigate = useNavigate();
 
 	const { mutate, isLoading } = useMutation(apiClient.addHotelRoom, {
 		onSuccess: () => {
 			showToast({ message: 'Room Saved!', type: 'SUCCESS' });
+			navigate(`/hotel/${hotelId}/rooms`);
 		},
 		onError: () => {
 			showToast({ message: 'Error Saving Room', type: 'ERROR' });
