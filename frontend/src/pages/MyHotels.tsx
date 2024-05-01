@@ -1,8 +1,7 @@
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import * as apiClient from '../api-client';
-import { BsBuilding, BsMap } from 'react-icons/bs';
-import { BiHotel, BiMoney, BiStar } from 'react-icons/bi';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 const MyHotels = () => {
 	const { data: hotelData } = useQuery(
@@ -39,26 +38,9 @@ const MyHotels = () => {
 							{hotel.description}
 						</div>
 						<div className="grid grid-cols-5 gap-2">
-							<div className="border border-slate-300 rounded-sm p-3 flex items-center">
-								<BsMap className="mr-1" />
-								{hotel.city}, {hotel.country}
-							</div>
-							<div className="border border-slate-300 rounded-sm p-3 flex items-center">
-								<BsBuilding className="mr-1" />
-								{hotel.type}
-							</div>
-							<div className="border border-slate-300 rounded-sm p-3 flex items-center">
-								<BiMoney className="mr-1" />£
-								{hotel.pricePerNight} per night
-							</div>
-							<div className="border border-slate-300 rounded-sm p-3 flex items-center">
-								<BiHotel className="mr-1" />
-								{hotel.adultCount} adults, {hotel.childCount}{' '}
-								children
-							</div>
-							<div className="border border-slate-300 rounded-sm p-3 flex items-center">
-								<BiStar className="mr-1" />
-								{hotel.starRating} Star Rating
+							<div className="flex justify-center items-center bg-lime-600 text-white py-1 px-2 rounded-md">
+								<FaMapMarkerAlt className="mr-1" />
+								<span>{hotel.city}</span>
 							</div>
 						</div>
 						<span className="flex justify-end gap-2">

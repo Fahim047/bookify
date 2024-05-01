@@ -1,11 +1,12 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
 import cloudinary from 'cloudinary';
-import { Room } from '../models/hotel';
+import { Booking, Room } from '../models/hotel';
 import verifyToken from '../middleware/auth';
 import { body } from 'express-validator';
-import { RoomType } from '../shared/types';
-
+import { BookingType, RoomType } from '../shared/types';
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 const router = express.Router();
 
 const storage = multer.memoryStorage();
@@ -20,9 +21,9 @@ router.post(
 	'/',
 	verifyToken,
 	[
-		body('roomNumber').notEmpty().withMessage('Name is required'),
+		body('roomNumber').notEmpty().withMessage('Room Number is required'),
 		body('description').notEmpty().withMessage('Description is required'),
-		body('type').notEmpty().withMessage('Hotel type is required'),
+		body('type').notEmpty().withMessage('Room type is required'),
 		body('pricePerNight')
 			.notEmpty()
 			.isNumeric()
@@ -123,6 +124,104 @@ router.put(
 			res.status(201).json(room);
 		} catch (error) {
 			res.status(500).json({ message: 'Something went wrong!' });
+		}
+	}
+);
+router.post(
+	'/:roomId/bookings/payment-intent',
+	async (req: Request, res: Response) => {
+		const { numberOfNights } = req.body;
+		const roomId = req.params.roomId;
+
+		const room = await Room.findById(roomId);
+		if (!room) {
+			return res.status(400).json({ message: 'Room not found' });
+		}
+
+		const totalCost = room.pricePerNight * numberOfNights;
+
+		const paymentIntent = await stripe.paymentIntents.create({
+			amount: totalCost * 100,
+			currency: 'gbp',
+			metadata: {
+				roomId,
+				userId: req.userId,
+			},
+		});
+
+		if (!paymentIntent.client_secret) {
+			return res
+				.status(500)
+				.json({ message: 'Error creating payment intent' });
+		}
+
+		const response = {
+			paymentIntentId: paymentIntent.id,
+			clientSecret: paymentIntent.client_secret.toString(),
+			totalCost,
+		};
+
+		res.send(response);
+	}
+);
+
+router.post(
+	'/:hotelId/bookings/:roomId',
+	async (req: Request, res: Response) => {
+		try {
+			const paymentIntentId = req.body.paymentIntentId;
+
+			const paymentIntent = await stripe.paymentIntents.retrieve(
+				paymentIntentId as string
+			);
+
+			if (!paymentIntent) {
+				return res
+					.status(400)
+					.json({ message: 'payment intent not found' });
+			}
+
+			if (
+				paymentIntent.metadata.roomId !== req.params.roomId ||
+				paymentIntent.metadata.userId !== req.userId
+			) {
+				return res
+					.status(400)
+					.json({ message: 'payment intent mismatch' });
+			}
+
+			if (paymentIntent.status !== 'succeeded') {
+				return res.status(400).json({
+					message: `payment intent not succeeded. Status: ${paymentIntent.status}`,
+				});
+			}
+
+			const newBooking: BookingType = {
+				...req.body,
+			};
+			console.log(newBooking);
+
+			const booking = await Booking.create(newBooking);
+			if (!booking) {
+				return res.status(400).json({ message: 'booking not created' });
+			}
+
+			const room = await Room.findOneAndUpdate(
+				{ _id: req.params.roomId },
+				{
+					$push: { bookings: newBooking },
+				}
+			);
+
+			if (!room) {
+				return res.status(400).json({ message: 'room not found' });
+			}
+
+			await room.save();
+			res.status(200).send();
+		} catch (error) {
+			console.log(error);
+			res.status(500).json({ message: 'something went wrong' });
 		}
 	}
 );

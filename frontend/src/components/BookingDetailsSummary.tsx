@@ -1,30 +1,31 @@
-import { HotelType } from '../../../backend/src/shared/types';
+import { HotelType, RoomType } from '../../../backend/src/shared/types';
 
 type Props = {
 	checkIn: Date;
 	checkOut: Date;
-	adultCount: number;
-	childCount: number;
 	numberOfNights: number;
 	hotel: HotelType;
+	room: RoomType;
 };
 
 const BookingDetailsSummary = ({
 	checkIn,
 	checkOut,
-	adultCount,
-	childCount,
 	numberOfNights,
 	hotel,
+	room,
 }: Props) => {
-	// console.log(checkIn);
 	return (
 		<div className="grid gap-4 rounded-lg border border-slate-300 p-5 h-fit">
 			<h2 className="text-xl font-bold">Your Booking Details</h2>
 
 			<div className="border-b py-2">
-				Location:
-				<div className="font-bold">{`${hotel.name}, ${hotel.city}, ${hotel.country}`}</div>
+				Hotel Name: &nbsp;
+				<span className="font-bold">{`${hotel.name}`}</span>
+			</div>
+			<div className="border-b py-2">
+				Room Number: &nbsp;
+				<span className="font-bold">{`${room.roomNumber}`}</span>
 			</div>
 			<div className="flex justify-between">
 				<div>
@@ -39,13 +40,6 @@ const BookingDetailsSummary = ({
 			<div className="border-t border-b py-2">
 				Total length of stay:
 				<div className="font-bold">{numberOfNights} nights</div>
-			</div>
-
-			<div>
-				Guests{' '}
-				<div className="font-bold">
-					{adultCount} adults & {childCount} children
-				</div>
 			</div>
 		</div>
 	);

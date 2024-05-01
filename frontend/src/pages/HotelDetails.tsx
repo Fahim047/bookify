@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import * as apiClient from '../api-client';
-import { AiFillStar } from 'react-icons/ai';
 import HotelRooms from '../pages/HotelRooms';
 
 const HotelDetails = () => {
@@ -21,11 +20,11 @@ const HotelDetails = () => {
 
 	return (
 		<div className="space-y-6">
-			<div className="flex items-center">
-				{[...Array(hotel.starRating)].map((_, index) => (
-					<AiFillStar key={index} className="fill-yellow-400" />
-				))}
-				<h1 className="text-3xl font-bold ml-2">{hotel.name}</h1>
+			<div className="flex items-center flex-col">
+				<h1 className="text-3xl font-bold ml-2 mb-2">{hotel.name}</h1>
+				<span className="text-gray-400">
+					{hotel.city},&nbsp;{hotel.country}
+				</span>
 			</div>
 
 			<div className="mb-6">
@@ -39,16 +38,8 @@ const HotelDetails = () => {
 					</div>
 				))}
 			</div>
-
-			<div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
-				{hotel.facilities.map((facility, index) => (
-					<div
-						key={index}
-						className="border border-slate-300 rounded-sm p-3"
-					>
-						{facility}
-					</div>
-				))}
+			<div className="whitespace-pre-line text-gray-700">
+				{hotel.description}
 			</div>
 
 			<div>

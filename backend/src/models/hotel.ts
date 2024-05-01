@@ -5,12 +5,10 @@ const bookingSchema = new mongoose.Schema<BookingType>({
 	firstName: { type: String, required: true },
 	lastName: { type: String, required: true },
 	email: { type: String, required: true },
-	phoneNumber: { type: String, required: true },
-	adultCount: { type: Number, required: true },
-	childCount: { type: Number, required: true },
+	phoneNumber: { type: String },
 	checkIn: { type: Date, required: true },
 	checkOut: { type: Date, required: true },
-	userId: { type: String, required: true },
+	userId: { type: String },
 	totalCost: { type: Number, required: true },
 	roomId: { type: String, required: true },
 	hotelId: { type: String, required: true },
@@ -21,11 +19,11 @@ const roomSchema = new mongoose.Schema<RoomType>({
 	roomNumber: { type: String, required: true },
 	description: { type: String, required: true },
 	type: { type: String, required: true },
-	adultCount: { type: Number, required: true },
-	childCount: { type: Number, required: true },
 	facilities: [{ type: String, required: true }],
 	pricePerNight: { type: Number, required: true },
 	imageUrls: [{ type: String, required: true }],
+	bookings: [bookingSchema],
+	alreadyBooked: { type: Boolean },
 });
 const hotelSchema = new mongoose.Schema<HotelType>({
 	userId: { type: String, required: true },
@@ -33,12 +31,7 @@ const hotelSchema = new mongoose.Schema<HotelType>({
 	city: { type: String, required: true },
 	country: { type: String, required: true },
 	description: { type: String, required: true },
-	type: { type: String, required: true },
-	adultCount: { type: Number, required: true },
-	childCount: { type: Number, required: true },
-	facilities: [{ type: String, required: true }],
-	pricePerNight: { type: Number, required: true },
-	starRating: { type: Number, required: true, min: 1, max: 5 },
+	contactNumber: { type: String, required: true },
 	imageUrls: [{ type: String, required: true }],
 	lastUpdated: { type: Date, required: true },
 	rooms: [roomSchema],
@@ -47,4 +40,6 @@ const hotelSchema = new mongoose.Schema<HotelType>({
 
 const Hotel = mongoose.model<HotelType>('Hotel', hotelSchema);
 export const Room = mongoose.model<RoomType>('Room', roomSchema);
+export const Booking = mongoose.model<BookingType>('Booking', bookingSchema);
+
 export default Hotel;

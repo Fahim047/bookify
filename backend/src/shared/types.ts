@@ -13,12 +13,11 @@ export type RoomType = {
 	roomNumber: string;
 	type: string;
 	description: string;
-	adultCount: number;
-	childCount: number;
 	facilities: string[];
 	pricePerNight: number;
 	imageUrls: string[];
 	bookings: BookingType[];
+	alreadyBooked: boolean;
 };
 
 export type HotelType = {
@@ -27,13 +26,8 @@ export type HotelType = {
 	name: string;
 	city: string;
 	country: string;
+	contactNumber: string;
 	description: string;
-	type: string;
-	adultCount: number;
-	childCount: number;
-	facilities: string[];
-	pricePerNight: number;
-	starRating: number;
 	imageUrls: string[];
 	lastUpdated: Date;
 	rooms: RoomType[];
@@ -47,8 +41,6 @@ export type BookingType = {
 	lastName: string;
 	email: string;
 	phoneNumber: string;
-	adultCount: number;
-	childCount: number;
 	checkIn: Date;
 	checkOut: Date;
 	totalCost: number;

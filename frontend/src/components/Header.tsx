@@ -4,7 +4,6 @@ import SignOutButton from './SignOutButton';
 
 const Header = () => {
 	const { isLoggedIn } = useAppContext();
-
 	return (
 		<div className="bg-blue-800 py-6">
 			<div className="container mx-auto flex justify-between">
@@ -31,7 +30,7 @@ const Header = () => {
 					) : (
 						<Link
 							to="/sign-in"
-							className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
+							className="inline-block px-4 py-2 text-sm font-semibold leading-none text-blue-600 bg-white border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition duration-300 ease-in-out"
 						>
 							Sign In
 						</Link>

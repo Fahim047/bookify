@@ -44,8 +44,6 @@ const ManageRoomForm = ({ onSave, isLoading, room, hotelId }: Props) => {
 		formData.append('description', formDataJson.description);
 		formData.append('type', formDataJson.type);
 		formData.append('pricePerNight', formDataJson.pricePerNight.toString());
-		formData.append('adultCount', formDataJson.adultCount.toString());
-		formData.append('childCount', formDataJson.childCount.toString());
 
 		formDataJson.facilities.forEach((facility, index) => {
 			formData.append(`facilities[${index}]`, facility);
@@ -70,7 +68,6 @@ const ManageRoomForm = ({ onSave, isLoading, room, hotelId }: Props) => {
 				<DetailsSection roomId={room?._id || ''} />
 				<TypeSection />
 				<FacilitiesSection />
-				<GuestsSection />
 				<ImagesSection />
 				<span className="flex justify-end">
 					<button

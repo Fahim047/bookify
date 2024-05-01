@@ -20,12 +20,11 @@ export type BookingFormData = {
 	firstName: string;
 	lastName: string;
 	email: string;
-	adultCount: number;
-	childCount: number;
 	checkIn: string;
 	checkOut: string;
 	hotelId: string;
 	roomId: string;
+	userId: string;
 	paymentIntentId: string;
 	totalCost: number;
 	phoneNumber: string;
@@ -58,12 +57,11 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 			lastName: currentUser.lastName,
 			email: currentUser.email,
 			phoneNumber: currentUser.phoneNumber,
-			adultCount: search.adultCount,
-			childCount: search.childCount,
 			checkIn: search.checkIn.toISOString(),
 			checkOut: search.checkOut.toISOString(),
 			hotelId: hotelId,
 			roomId: roomId,
+			userId: currentUser._id,
 			totalCost: paymentIntent.totalCost,
 			paymentIntentId: paymentIntent.paymentIntentId,
 		},

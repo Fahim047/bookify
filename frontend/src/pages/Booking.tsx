@@ -11,7 +11,7 @@ import { useAppContext } from '../contexts/AppContext';
 const Booking = () => {
 	const { stripePromise } = useAppContext();
 	const search = useSearchContext();
-	const { hotelId } = useParams();
+	const { hotelId, roomId } = useParams();
 
 	const [numberOfNights, setNumberOfNights] = useState<number>(0);
 
@@ -29,11 +29,11 @@ const Booking = () => {
 		'createPaymentIntent',
 		() =>
 			apiClient.createPaymentIntent(
-				hotelId as string,
+				roomId as string,
 				numberOfNights.toString()
 			),
 		{
-			enabled: !!hotelId && numberOfNights > 0,
+			enabled: !!roomId && numberOfNights > 0,
 		}
 	);
 
@@ -44,13 +44,20 @@ const Booking = () => {
 			enabled: !!hotelId,
 		}
 	);
+	const { data: room } = useQuery(
+		'fetchRoomByID',
+		() => apiClient.fetchRoomById(roomId as string),
+		{
+			enabled: !!roomId,
+		}
+	);
 
 	const { data: currentUser } = useQuery(
 		'fetchCurrentUser',
 		apiClient.fetchCurrentUser
 	);
 
-	if (!hotel) {
+	if (!room) {
 		return <></>;
 	}
 
@@ -59,10 +66,9 @@ const Booking = () => {
 			<BookingDetailsSummary
 				checkIn={search.checkIn}
 				checkOut={search.checkOut}
-				adultCount={search.adultCount}
-				childCount={search.childCount}
 				numberOfNights={numberOfNights}
 				hotel={hotel}
+				room={room}
 			/>
 			{currentUser && paymentIntentData && (
 				<Elements
