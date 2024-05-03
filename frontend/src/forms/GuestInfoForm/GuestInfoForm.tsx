@@ -23,10 +23,9 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 
 	const {
 		watch,
-		register,
 		handleSubmit,
 		setValue,
-		formState: { errors },
+		formState: {},
 	} = useForm<GuestInfoFormData>({
 		defaultValues: {
 			checkIn: search.checkIn,

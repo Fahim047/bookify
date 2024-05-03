@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import DetailsSection from './DetailsSection';
 import TypeSection from './TypeSection';
 import FacilitiesSection from './FacilitiesSection';
-import GuestsSection from './GuestsSection';
+// import GuestsSection from './GuestsSection';
 import ImagesSection from './ImagesSection';
 import { RoomType } from '../../../../backend/src/shared/types';
 import { useEffect } from 'react';
