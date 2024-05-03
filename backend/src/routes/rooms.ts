@@ -42,9 +42,6 @@ router.post(
 			const imageUrls = await uploadImages(imageFiles);
 
 			newRoom.imageUrls = imageUrls;
-			// newRoom.lastUpdated = new Date();
-			// newRoom.hotelId = req.hotelId;
-			// newRoom.hotelId = req.params.hotelId;
 
 			const room = new Room(newRoom);
 			await room.save();
@@ -78,13 +75,11 @@ router.get(
 
 router.get('/:roomId', async (req: Request, res: Response) => {
 	const roomId = req.params.roomId.toString();
-	// console.log(roomId);
 	try {
 		const room = await Room.findOne({
 			_id: roomId,
-			// hotelId: req.userId,
 		});
-		// console.log(room);
+
 		res.json(room);
 	} catch (error) {
 		res.status(500).json({ message: 'Error fetching room!' });
@@ -209,8 +204,15 @@ router.post(
 			const room = await Room.findOneAndUpdate(
 				{ _id: req.params.roomId },
 				{
-					$push: { bookings: newBooking },
-				}
+					$push: {
+						bookings: newBooking,
+						alreadyBooked: {
+							checkIn: newBooking.checkIn,
+							checkOut: newBooking.checkOut,
+						},
+					},
+				},
+				{ new: true }
 			);
 
 			if (!room) {

@@ -14,6 +14,11 @@ const bookingSchema = new mongoose.Schema<BookingType>({
 	hotelId: { type: String, required: true },
 });
 
+const DateRangeSchema = new mongoose.Schema({
+	checkIn: { type: Date, required: true },
+	checkOut: { type: Date, required: true },
+});
+
 const roomSchema = new mongoose.Schema<RoomType>({
 	hotelId: { type: String, required: true },
 	roomNumber: { type: String, required: true },
@@ -23,7 +28,7 @@ const roomSchema = new mongoose.Schema<RoomType>({
 	pricePerNight: { type: Number, required: true },
 	imageUrls: [{ type: String, required: true }],
 	bookings: [bookingSchema],
-	alreadyBooked: { type: Boolean },
+	alreadyBooked: [DateRangeSchema],
 });
 const hotelSchema = new mongoose.Schema<HotelType>({
 	userId: { type: String, required: true },

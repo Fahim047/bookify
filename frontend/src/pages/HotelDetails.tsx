@@ -43,7 +43,7 @@ const HotelDetails = () => {
 			</div>
 
 			<div>
-				<HotelRooms hotelId={hotel._id} />
+				<HotelRooms hotelId={hotelId || ''} />
 			</div>
 		</div>
 	);

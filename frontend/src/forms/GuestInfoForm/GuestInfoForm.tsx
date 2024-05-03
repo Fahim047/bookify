@@ -4,6 +4,7 @@ import { useSearchContext } from '../../contexts/SearchContext';
 import { useAppContext } from '../../contexts/AppContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RoomType } from '../../../../backend/src/shared/types';
+import { addDays, isWithinInterval, parseISO, subDays } from 'date-fns';
 type Props = {
 	room: RoomType;
 	pricePerNight: number;
@@ -36,6 +37,8 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 	const checkIn = watch('checkIn');
 	const checkOut = watch('checkOut');
 
+	// console.log(new Date());
+
 	const minDate = new Date();
 	const maxDate = new Date();
 	maxDate.setFullYear(maxDate.getFullYear() + 1);
@@ -49,6 +52,13 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 		search.saveSearchValues('', data.checkIn, data.checkOut);
 		navigate(`/hotel/${room.hotelId}/booking/${room._id}`);
 	};
+
+	const alreadyBookedDates = room.alreadyBooked.map((dateRange) => {
+		return {
+			start: subDays(new Date(dateRange.checkIn), 1),
+			end: subDays(new Date(dateRange.checkOut), 1),
+		};
+	});
 
 	return (
 		<div className="flex flex-col p-6 bg-blue-200 rounded-lg shadow-md">
@@ -85,7 +95,9 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 							startDate={checkIn}
 							endDate={checkOut}
 							minDate={minDate}
+							excludeDateIntervals={alreadyBookedDates}
 							maxDate={maxDate}
+							dateFormat="dd/MM/yyyy"
 							placeholderText="Select Check-in Date"
 							className="w-full bg-white p-2 rounded focus:outline-none"
 						/>
@@ -104,10 +116,12 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 								setValue('checkOut', date as Date)
 							}
 							selectsEnd
+							excludeDateIntervals={alreadyBookedDates}
 							startDate={checkIn}
 							endDate={checkOut}
 							minDate={minDate}
 							maxDate={maxDate}
+							dateFormat="dd/MM/yyyy"
 							placeholderText="Select Check-out Date"
 							className="w-full bg-white p-2 rounded focus:outline-none"
 						/>

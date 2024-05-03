@@ -5,9 +5,15 @@ type Props = {
 };
 const RoomCard = ({ room }: Props) => {
 	return (
-		<div className="hover:cursor-pointer mb-3">
+		<div className="mb-3">
 			<h1 className="text-xl font-bold mb-2">{room.roomNumber}</h1>
-			<img src={room.imageUrls[0]} alt="" height={300} width={300} />
+			<div className="h-300px">
+				<img
+					src={room.imageUrls[0]}
+					alt=""
+					className="w-[200px] h-[200px] object-cover object-center rounded-md "
+				/>
+			</div>
 		</div>
 	);
 };

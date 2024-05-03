@@ -18,41 +18,6 @@ const RoomDetails = () => {
 	}
 
 	return (
-		// <div className="space-y-6">
-		// 	<div>
-		// 		<h1 className="text-3xl font-bold">{room.roomNumber}</h1>
-		// 	</div>
-
-		// 	<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-		// 		{room.imageUrls.map((image) => (
-		// 			<div className="w-full">
-		// 				<img
-		// 					src={image}
-		// 					alt={room.roomNumber}
-		// 					className="rounded-md w-full h-full object-cover object-center"
-		// 				/>
-		// 			</div>
-		// 		))}
-		// 	</div>
-
-		// 	<div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
-		// 		{room.facilities.map((facility) => (
-		// 			<div className="border border-slate-300 rounded-sm p-3">
-		// 				{facility}
-		// 			</div>
-		// 		))}
-		// 	</div>
-
-		// 	<div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
-		// 		<div className="whitespace-pre-line">{room.description}</div>
-		// 		<div className="h-fit">
-		// 			<GuestInfoForm
-		// 				pricePerNight={room.pricePerNight}
-		// 				room={room}
-		// 			/>
-		// 		</div>
-		// 	</div>
-		// </div>
 		<div className="space-y-6">
 			<div className="flex justify-between items-center">
 				<h1 className="text-3xl font-bold">{room.roomNumber}</h1>

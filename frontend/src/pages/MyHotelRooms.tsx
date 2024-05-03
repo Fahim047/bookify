@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import * as apiClient from '../api-client';
 const MyHotelRooms = () => {
 	const { hotelId } = useParams();
-	const { data: rooms } = useQuery('fetchQuery', () =>
+	const { data: rooms } = useQuery('fetchRoomByHotelId', () =>
 		apiClient.fetchRoomsByHotelId(hotelId || '')
 	);
 	return (

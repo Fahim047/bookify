@@ -7,6 +7,11 @@ export type UserType = {
 	lastName: string;
 };
 
+export type DateRange = {
+	checkIn: Date;
+	checkOut: Date;
+};
+
 export type RoomType = {
 	_id: string;
 	hotelId: string;
@@ -17,7 +22,7 @@ export type RoomType = {
 	pricePerNight: number;
 	imageUrls: string[];
 	bookings: BookingType[];
-	alreadyBooked: boolean;
+	alreadyBooked: DateRange[];
 };
 
 export type HotelType = {

@@ -32,60 +32,6 @@ const SearchBar = () => {
 	maxDate.setFullYear(maxDate.getFullYear() + 1);
 
 	return (
-		// <form
-		// 	onSubmit={handleSubmit}
-		// 	className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4"
-		// >
-		// 	<div className="flex flex-row items-center flex-1 bg-white p-2">
-		// 		<MdTravelExplore size={25} className="mr-2" />
-		// 		<input
-		// 			placeholder="Where are you going?"
-		// 			className="text-md w-full focus:outline-none"
-		// 			value={destination}
-		// 			onChange={(event) => setDestination(event.target.value)}
-		// 		/>
-		// 	</div>
-		// 	<div>
-		// 		<DatePicker
-		// 			selected={checkIn}
-		// 			onChange={(date) => setCheckIn(date as Date)}
-		// 			selectsStart
-		// 			startDate={checkIn}
-		// 			endDate={checkOut}
-		// 			minDate={minDate}
-		// 			maxDate={maxDate}
-		// 			placeholderText="Check-in Date"
-		// 			className="min-w-full bg-white p-2 focus:outline-none"
-		// 			wrapperClassName="min-w-full"
-		// 		/>
-		// 	</div>
-		// 	<div>
-		// 		<DatePicker
-		// 			selected={checkOut}
-		// 			onChange={(date) => setCheckOut(date as Date)}
-		// 			selectsStart
-		// 			startDate={checkIn}
-		// 			endDate={checkOut}
-		// 			minDate={minDate}
-		// 			maxDate={maxDate}
-		// 			placeholderText="Check-out Date"
-		// 			className="min-w-full bg-white p-2 focus:outline-none"
-		// 			wrapperClassName="min-w-full"
-		// 		/>
-		// 	</div>
-		// 	<div className="flex gap-3 justify-end w-full">
-		// 		<button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500">
-		// 			Search
-		// 		</button>
-		// 		<button
-		// 			type="button"
-		// 			className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500"
-		// 			onClick={handleClear}
-		// 		>
-		// 			Clear
-		// 		</button>
-		// 	</div>
-		// </form>
 		<form
 			onSubmit={handleSubmit}
 			className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center gap-4"
@@ -99,7 +45,7 @@ const SearchBar = () => {
 					onChange={(event) => setDestination(event.target.value)}
 				/>
 			</div>
-			<div className="flex justify-between">
+			{/* <div className="flex justify-between">
 				<DatePicker
 					selected={checkIn}
 					onChange={(date) => setCheckIn(date as Date)}
@@ -108,6 +54,7 @@ const SearchBar = () => {
 					endDate={checkOut}
 					minDate={minDate}
 					maxDate={maxDate}
+					dateFormat="dd/MM/yyyy"
 					placeholderText="Check-in Date"
 					className="w-full p-2 focus:outline-none bg-white text-gray-600 font-bold"
 				/>
@@ -121,10 +68,11 @@ const SearchBar = () => {
 					endDate={checkOut}
 					minDate={checkIn}
 					maxDate={maxDate}
+					dateFormat="dd/MM/yyyy"
 					placeholderText="Check-out Date"
 					className="w-full p-2 focus:outline-none bg-white text-gray-600 font-bold"
 				/>
-			</div>
+			</div> */}
 			<div className="flex gap-3 justify-end w-full">
 				<button className="w-full bg-blue-600 text-white h-full p-2 font-bold text-lg hover:bg-blue-500 rounded">
 					Search
