@@ -4,7 +4,7 @@ import { useSearchContext } from '../../contexts/SearchContext';
 import { useAppContext } from '../../contexts/AppContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RoomType } from '../../../../backend/src/shared/types';
-import { addDays, isWithinInterval, parseISO, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 type Props = {
 	room: RoomType;
 	pricePerNight: number;

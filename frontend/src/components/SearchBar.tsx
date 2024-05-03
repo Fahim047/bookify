@@ -1,8 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { useSearchContext } from '../contexts/SearchContext';
 import { MdTravelExplore } from 'react-icons/md';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
@@ -27,9 +27,9 @@ const SearchBar = () => {
 		setCheckOut(tomorrow);
 	};
 
-	const minDate = new Date();
-	const maxDate = new Date();
-	maxDate.setFullYear(maxDate.getFullYear() + 1);
+	// const minDate = new Date();
+	// const maxDate = new Date();
+	// maxDate.setFullYear(maxDate.getFullYear() + 1);
 
 	return (
 		<form

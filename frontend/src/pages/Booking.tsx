@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import BookingDetailsSummary from '../components/BookingDetailsSummary';
 import { Elements } from '@stripe/react-stripe-js';
 import { useAppContext } from '../contexts/AppContext';
-
+import { HotelType } from '../../../backend/src/shared/types';
 const Booking = () => {
 	const { stripePromise } = useAppContext();
 	const search = useSearchContext();
@@ -67,7 +67,7 @@ const Booking = () => {
 				checkIn={search.checkIn}
 				checkOut={search.checkOut}
 				numberOfNights={numberOfNights}
-				hotel={hotel}
+				hotel={hotel as HotelType}
 				room={room}
 			/>
 			{currentUser && paymentIntentData && (

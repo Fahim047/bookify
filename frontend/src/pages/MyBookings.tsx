@@ -1,19 +1,20 @@
-import { useQuery } from "react-query";
-import * as apiClient from "../api-client";
+import { useQuery } from 'react-query';
+import * as apiClient from '../api-client';
 
 const MyBookings = () => {
-  const { data: hotels } = useQuery(
-    "fetchMyBookings",
-    apiClient.fetchMyBookings
-  );
+	const { data: hotels } = useQuery(
+		'fetchMyBookings',
+		apiClient.fetchMyBookings
+	);
 
-  if (!hotels || hotels.length === 0) {
-    return <span>No bookings found</span>;
-  }
+	if (!hotels || hotels.length === 0) {
+		return <span>No bookings found</span>;
+	}
 
-  return (
-    <div className="space-y-5">
-      <h1 className="text-3xl font-bold">My Bookings</h1>
+	return (
+		<div className="space-y-5">
+			<h1>Will be added soon!</h1>
+			{/* <h1 className="text-3xl font-bold">My Bookings</h1>
       {hotels.map((hotel) => (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] border border-slate-300 rounded-lg p-8 gap-5">
           <div className="lg:w-full lg:h-[250px]">
@@ -48,9 +49,9 @@ const MyBookings = () => {
             ))}
           </div>
         </div>
-      ))}
-    </div>
-  );
+      ))} */}
+		</div>
+	);
 };
 
 export default MyBookings;
