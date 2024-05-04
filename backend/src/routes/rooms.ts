@@ -6,8 +6,13 @@ import verifyToken from '../middleware/auth';
 import { body } from 'express-validator';
 import { BookingType, RoomType } from '../shared/types';
 import Stripe from 'stripe';
+const SSLCommerzPayment = require('sslcommerz-lts');
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 const router = express.Router();
+
+const store_id = process.env.SSL_COMMERZ_STORE_ID || '';
+const store_passwd = process.env.SSL_COMMERZ_STORE_PASSWORD || '';
+const is_live = false; //true for live, false for sandbox
 
 const storage = multer.memoryStorage();
 const upload = multer({
