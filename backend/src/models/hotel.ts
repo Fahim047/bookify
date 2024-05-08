@@ -12,6 +12,8 @@ const bookingSchema = new mongoose.Schema<BookingType>({
 	totalCost: { type: Number, required: true },
 	roomId: { type: String, required: true },
 	hotelId: { type: String, required: true },
+	transactionId: { type: String },
+	paymentStatus: { type: Boolean, default: false },
 });
 
 const DateRangeSchema = new mongoose.Schema({

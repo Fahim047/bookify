@@ -20,6 +20,9 @@ import MyHotelRooms from './pages/MyHotelRooms';
 import AddRoom from './pages/AddRoom';
 import RoomDetails from './pages/RoomDetails';
 import EditRoom from './pages/EditRoom';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentFailed from './pages/PaymentFailed';
+import Reservations from './pages/Reservations';
 
 const App = () => {
 	const { isLoggedIn } = useAppContext();
@@ -139,6 +142,30 @@ const App = () => {
 							element={
 								<Layout>
 									<RoomDetails />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/successful-booking"
+							element={
+								<Layout>
+									<PaymentSuccess />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/payment-failed"
+							element={
+								<Layout>
+									<PaymentFailed />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/hotel-reservations"
+							element={
+								<Layout>
+									<Reservations />
 								</Layout>
 							}
 						/>

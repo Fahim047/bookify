@@ -266,23 +266,23 @@ export const createPaymentIntent = async (
 	return response.json();
 };
 
-export const createRoomBooking = async (formData: BookingFormData) => {
-	const response = await fetch(
-		`${API_BASE_URL}/api/rooms/${formData.hotelId}/bookings/${formData.roomId}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			credentials: 'include',
-			body: JSON.stringify(formData),
-		}
-	);
+// export const createRoomBooking = async (formData: BookingFormData) => {
+// 	const response = await fetch(
+// 		`${API_BASE_URL}/api/rooms/${formData.hotelId}/bookings/${formData.roomId}/pay`,
+// 		{
+// 			method: 'POST',
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 			},
+// 			credentials: 'include',
+// 			body: JSON.stringify(formData),
+// 		}
+// 	);
 
-	if (!response.ok) {
-		throw new Error('Error booking room');
-	}
-};
+// 	if (!response.ok) {
+// 		throw new Error('Error booking room');
+// 	}
+// };
 
 export const fetchMyBookings = async (): Promise<HotelType[]> => {
 	const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {

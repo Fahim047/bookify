@@ -51,6 +51,8 @@ export type BookingType = {
 	totalCost: number;
 	roomId: string;
 	hotelId: string;
+	transactionId: string;
+	paymentStatus: boolean;
 };
 
 export type HotelSearchResponse = {

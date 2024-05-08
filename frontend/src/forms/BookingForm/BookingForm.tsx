@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import {
+	HotelType,
 	PaymentIntentResponse,
+	RoomType,
 	UserType,
 } from '../../../../backend/src/shared/types';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -10,10 +12,13 @@ import { useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import * as apiClient from '../../api-client';
 import { useAppContext } from '../../contexts/AppContext';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 type Props = {
 	currentUser: UserType;
-	paymentIntent: PaymentIntentResponse;
+	hotel: HotelType;
+	room: RoomType;
+	numberOfNights: number;
 };
 
 export type BookingFormData = {
@@ -25,31 +30,28 @@ export type BookingFormData = {
 	hotelId: string;
 	roomId: string;
 	userId: string;
-	paymentIntentId: string;
 	totalCost: number;
 	phoneNumber: string;
+	numberOfNights: number;
 };
 
-const BookingForm = ({ currentUser, paymentIntent }: Props) => {
-	const stripe = useStripe();
-	const elements = useElements();
-
+const BookingForm = ({ currentUser, hotel, room, numberOfNights }: Props) => {
 	const search = useSearchContext();
 	const { hotelId, roomId } = useParams();
 
 	const { showToast } = useAppContext();
 
-	const { mutate: bookRoom, isLoading } = useMutation(
-		apiClient.createRoomBooking,
-		{
-			onSuccess: () => {
-				showToast({ message: 'Booking Saved!', type: 'SUCCESS' });
-			},
-			onError: () => {
-				showToast({ message: 'Error saving booking', type: 'ERROR' });
-			},
-		}
-	);
+	// const { mutate: bookRoom, isLoading } = useMutation(
+	// apiClient.createRoomBooking,
+	// 	{
+	// 		onSuccess: () => {
+	// 			showToast({ message: 'Booking Saved!', type: 'SUCCESS' });
+	// 		},
+	// 		onError: () => {
+	// 			showToast({ message: 'Error saving booking', type: 'ERROR' });
+	// 		},
+	// 	}
+	// );
 
 	const { handleSubmit, register } = useForm<BookingFormData>({
 		defaultValues: {
@@ -62,28 +64,30 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 			hotelId: hotelId,
 			roomId: roomId,
 			userId: currentUser._id,
-			totalCost: paymentIntent.totalCost,
-			paymentIntentId: paymentIntent.paymentIntentId,
+			totalCost: numberOfNights * room.pricePerNight,
+			numberOfNights: numberOfNights,
 		},
 	});
 
 	const onSubmit = async (formData: BookingFormData) => {
-		if (!stripe || !elements) {
-			return;
-		}
+		console.log(formData);
+		// bookRoom({ ...formData, numberOfNights: numberOfNights });
 
-		const result = await stripe.confirmCardPayment(
-			paymentIntent.clientSecret,
+		fetch(
+			`${API_BASE_URL}/api/rooms/${formData.hotelId}/bookings/${formData.roomId}/book-now`,
 			{
-				payment_method: {
-					card: elements.getElement(CardElement) as StripeCardElement,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
 				},
+				body: JSON.stringify(formData),
 			}
-		);
-
-		if (result.paymentIntent?.status === 'succeeded') {
-			bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
-		}
+		)
+			.then((res) => res.json())
+			.then((result) => {
+				console.log(result);
+				window.location.replace(result.url);
+			});
 	};
 
 	return (
@@ -144,27 +148,21 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 						<span className="inline-block px-1 text-2xl">
 							&#2547;
 						</span>{' '}
-						{paymentIntent.totalCost.toFixed(2)}
+						{room.pricePerNight * numberOfNights}
 					</div>
 					<div className="text-xs">Includes taxes and charges</div>
 				</div>
 			</div>
 
-			<div className="space-y-2">
-				<h3 className="text-xl font-semibold"> Payment Details</h3>
-				<CardElement
-					id="payment-element"
-					className="border rounded-md p-2 text-sm"
-				/>
-			</div>
-
 			<div className="flex justify-end">
 				<button
-					disabled={isLoading}
+					// disabled={isLoading}
 					type="submit"
 					className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500"
 				>
-					{isLoading ? 'Saving...' : 'Confirm Booking'}
+					{/* {isLoading ? 'Saving...' : 'Confirm Booking'}
+					 */}
+					Continue
 				</button>
 			</div>
 		</form>

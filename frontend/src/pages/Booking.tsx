@@ -25,17 +25,17 @@ const Booking = () => {
 		}
 	}, [search.checkIn, search.checkOut]);
 
-	const { data: paymentIntentData } = useQuery(
-		'createPaymentIntent',
-		() =>
-			apiClient.createPaymentIntent(
-				roomId as string,
-				numberOfNights.toString()
-			),
-		{
-			enabled: !!roomId && numberOfNights > 0,
-		}
-	);
+	// const { data: paymentIntentData } = useQuery(
+	// 	'createPaymentIntent',
+	// 	() =>
+	// 		apiClient.createPaymentIntent(
+	// 			roomId as string,
+	// 			numberOfNights.toString()
+	// 		),
+	// 	{
+	// 		enabled: !!roomId && numberOfNights > 0,
+	// 	}
+	// );
 
 	const { data: hotel } = useQuery(
 		'fetchHotelByID',
@@ -70,18 +70,13 @@ const Booking = () => {
 				hotel={hotel as HotelType}
 				room={room}
 			/>
-			{currentUser && paymentIntentData && (
-				<Elements
-					stripe={stripePromise}
-					options={{
-						clientSecret: paymentIntentData.clientSecret,
-					}}
-				>
-					<BookingForm
-						currentUser={currentUser}
-						paymentIntent={paymentIntentData}
-					/>
-				</Elements>
+			{currentUser && (
+				<BookingForm
+					currentUser={currentUser}
+					numberOfNights={numberOfNights}
+					hotel={hotel as HotelType}
+					room={room}
+				/>
 			)}
 		</div>
 	);
