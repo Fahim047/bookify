@@ -5,11 +5,11 @@ import { useSearchContext } from '../contexts/SearchContext';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import BookingDetailsSummary from '../components/BookingDetailsSummary';
-import { Elements } from '@stripe/react-stripe-js';
-import { useAppContext } from '../contexts/AppContext';
+// import { Elements } from '@stripe/react-stripe-js';
+// import { useAppContext } from '../contexts/AppContext';
 import { HotelType } from '../../../backend/src/shared/types';
 const Booking = () => {
-	const { stripePromise } = useAppContext();
+	// const { stripePromise } = useAppContext();
 	const search = useSearchContext();
 	const { hotelId, roomId } = useParams();
 

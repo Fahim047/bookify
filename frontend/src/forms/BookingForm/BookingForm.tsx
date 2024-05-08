@@ -1,17 +1,14 @@
 import { useForm } from 'react-hook-form';
 import {
 	HotelType,
-	PaymentIntentResponse,
 	RoomType,
 	UserType,
 } from '../../../../backend/src/shared/types';
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { StripeCardElement } from '@stripe/stripe-js';
 import { useSearchContext } from '../../contexts/SearchContext';
 import { useParams } from 'react-router-dom';
-import { useMutation } from 'react-query';
-import * as apiClient from '../../api-client';
-import { useAppContext } from '../../contexts/AppContext';
+// import { useMutation } from 'react-query';
+// import * as apiClient from '../../api-client';
+// import { useAppContext } from '../../contexts/AppContext';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 type Props = {
@@ -35,11 +32,11 @@ export type BookingFormData = {
 	numberOfNights: number;
 };
 
-const BookingForm = ({ currentUser, hotel, room, numberOfNights }: Props) => {
+const BookingForm = ({ currentUser, room, numberOfNights }: Props) => {
 	const search = useSearchContext();
 	const { hotelId, roomId } = useParams();
 
-	const { showToast } = useAppContext();
+	// const { showToast } = useAppContext();
 
 	// const { mutate: bookRoom, isLoading } = useMutation(
 	// apiClient.createRoomBooking,
