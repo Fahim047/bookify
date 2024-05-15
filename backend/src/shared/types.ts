@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export type UserType = {
 	_id: string;
 	email: string;
@@ -36,7 +38,6 @@ export type HotelType = {
 	imageUrls: string[];
 	lastUpdated: Date;
 	rooms: RoomType[];
-	bookings: BookingType[];
 };
 
 export type BookingType = {
@@ -49,8 +50,23 @@ export type BookingType = {
 	checkIn: Date;
 	checkOut: Date;
 	totalCost: number;
-	roomId: string;
-	hotelId: string;
+	roomId: mongoose.Schema.Types.ObjectId;
+	hotelId: mongoose.Schema.Types.ObjectId;
+	transactionId: string;
+	paymentStatus: boolean;
+};
+export type BookingWithHotelType = {
+	_id: string;
+	userId: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	checkIn: Date;
+	checkOut: Date;
+	totalCost: number;
+	roomId: RoomType;
+	hotelId: HotelType;
 	transactionId: string;
 	paymentStatus: boolean;
 };

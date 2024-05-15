@@ -162,7 +162,7 @@ const App = () => {
 							}
 						/>
 						<Route
-							path="/hotel-reservations"
+							path="/:hotelId/hotel-reservations"
 							element={
 								<Layout>
 									<Reservations />

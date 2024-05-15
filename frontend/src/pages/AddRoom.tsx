@@ -12,7 +12,7 @@ const AddRoom = () => {
 	const { mutate, isLoading } = useMutation(apiClient.addHotelRoom, {
 		onSuccess: () => {
 			showToast({ message: 'Room Saved!', type: 'SUCCESS' });
-			navigate(`/hotel/${hotelId}/rooms`);
+			navigate(`/my-hotels`);
 		},
 		onError: () => {
 			showToast({ message: 'Error Saving Room', type: 'ERROR' });

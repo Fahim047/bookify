@@ -28,10 +28,7 @@ const GuestInfoForm = ({ room, pricePerNight }: Props) => {
 		setValue,
 		formState: {},
 	} = useForm<GuestInfoFormData>({
-		defaultValues: {
-			checkIn: search.checkIn,
-			checkOut: search.checkOut,
-		},
+		defaultValues: {},
 	});
 
 	const checkIn = watch('checkIn');

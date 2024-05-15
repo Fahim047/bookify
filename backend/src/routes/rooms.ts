@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
 import cloudinary from 'cloudinary';
-import { Booking, Room } from '../models/hotel';
+import Hotel, { Booking, Room } from '../models/hotel';
 import verifyToken from '../middleware/auth';
 import { body } from 'express-validator';
 import { BookingType, RoomType } from '../shared/types';
@@ -51,6 +51,19 @@ router.post(
 
 			const room = new Room(newRoom);
 			await room.save();
+
+			// Update the hotel document to push the newly created room
+			const updatedHotel = await Hotel.findByIdAndUpdate(
+				req.body.hotelId, // Assuming hotelId is provided in the request body
+				{ $push: { rooms: room } },
+				{ new: true }
+			);
+
+			if (!updatedHotel) {
+				return res
+					.status(400)
+					.json({ message: 'Hotel not found or unable to update' });
+			}
 
 			res.status(201).send(room);
 		} catch (e) {
@@ -128,70 +141,6 @@ router.put(
 		}
 	}
 );
-// router.post(
-// 	'/:roomId/bookings/payment-intent',
-// 	async (req: Request, res: Response) => {
-// 		const { numberOfNights } = req.body;
-// 		const roomId = req.params.roomId;
-
-// 		const room = await Room.findById(roomId);
-// 		if (!room) {
-// 			return res.status(400).json({ message: 'Room not found' });
-// 		}
-
-// 		const totalCost = room.pricePerNight * numberOfNights;
-
-// 		const response = {
-// 			paymentIntentId: paymentIntent.id,
-// 			clientSecret: paymentIntent.client_secret.toString(),
-// 			totalCost,
-// 		};
-
-// 		res.send(response);
-// 	}
-// );
-
-// router.post(
-// 	'/:hotelId/bookings/:roomId',
-// 	async (req: Request, res: Response) => {
-// 		try {
-
-// 			const newBooking: BookingType = {
-// 				...req.body,
-// 			};
-// 			console.log(newBooking);
-
-// 			const booking = await Booking.create(newBooking);
-// 			if (!booking) {
-// 				return res.status(400).json({ message: 'booking not created' });
-// 			}
-
-// 			const room = await Room.findOneAndUpdate(
-// 				{ _id: req.params.roomId },
-// 				{
-// 					$push: {
-// 						bookings: newBooking,
-// 						alreadyBooked: {
-// 							checkIn: newBooking.checkIn,
-// 							checkOut: newBooking.checkOut,
-// 						},
-// 					},
-// 				},
-// 				{ new: true }
-// 			);
-
-// 			if (!room) {
-// 				return res.status(400).json({ message: 'room not found' });
-// 			}
-
-// 			await room.save();
-// 			res.status(200).send();
-// 		} catch (error) {
-// 			console.log(error);
-// 			res.status(500).json({ message: 'something went wrong' });
-// 		}
-// 	}
-// );
 
 router.post(
 	'/:hotelId/bookings/:roomId/book-now',
@@ -253,32 +202,86 @@ router.post(
 		}
 	}
 );
+// router.post(
+// 	'/:hotelId/bookings/:roomId/payment/success/:tranId',
+// 	async (req, res) => {
+// 		// console.log(req.params.tranId, req.params.hotelId, req.params.roomId);
+// 		try {
+// 			const updatedBooking = await Booking.updateOne(
+// 				{
+// 					transactionId: req.params.tranId,
+// 				},
+// 				{
+// 					$set: {
+// 						paymentStatus: true,
+// 					},
+// 				},
+// 				{ new: true }
+// 			);
+// 			if (!booking) {
+// 				return res.status(400).json({ message: 'booking not created' });
+// 			}
+// 			const newBooking = await Booking.findOne({
+// 				transactionId: req.params.tranId,
+// 				paymentStatus: true,
+// 			});
+// 			console.log(newBooking);
+// 			const room = await Room.findOneAndUpdate(
+// 				{ _id: req.params.roomId },
+// 				{
+// 					$push: {
+// 						bookings: newBooking,
+// 						alreadyBooked: {
+// 							checkIn: newBooking?.checkIn,
+// 							checkOut: newBooking?.checkOut,
+// 						},
+// 					},
+// 				},
+// 				{ new: true }
+// 			);
+// 			const hotel = await Hotel.findOneAndUpdate(
+// 				{ _id: req.params.hotelId },
+// 				{
+// 					$push: {
+// 						rooms: room,
+// 					},
+// 				},
+// 				{ new: true }
+// 			);
+// 			if (!room) {
+// 				return res.status(400).json({ message: 'room not found' });
+// 			}
+// 			await room.save();
+// 			// res.status(200).send();
+// 			res.redirect('http://localhost:5174/successful-booking');
+// 		} catch (error) {
+// 			console.log(error);
+// 			res.status(500).json({ message: 'something went wrong' });
+// 		}
+// 	}
+// );
+
 router.post(
 	'/:hotelId/bookings/:roomId/payment/success/:tranId',
 	async (req, res) => {
-		// console.log(req.params.tranId, req.params.hotelId, req.params.roomId);
 		try {
-			const booking = await Booking.updateOne(
-				{
-					transactionId: req.params.tranId,
-				},
-				{
-					$set: {
-						paymentStatus: true,
-					},
-				},
+			// Update booking payment status
+			const updatedBooking = await Booking.findOneAndUpdate(
+				{ transactionId: req.params.tranId },
+				{ paymentStatus: true },
 				{ new: true }
 			);
-			if (!booking) {
-				return res.status(400).json({ message: 'booking not created' });
+
+			if (!updatedBooking) {
+				return res
+					.status(400)
+					.json({ message: 'Booking not found or already updated' });
 			}
-			const newBooking = await Booking.findOne({
-				transactionId: req.params.tranId,
-				paymentStatus: true,
-			});
-			console.log(newBooking);
-			const room = await Room.findOneAndUpdate(
-				{ _id: req.params.roomId },
+
+			// Associate booking with room
+			const newBooking = await Booking.findById(updatedBooking._id);
+			const updatedRoom = await Room.findByIdAndUpdate(
+				req.params.roomId,
 				{
 					$push: {
 						bookings: newBooking,
@@ -290,15 +293,27 @@ router.post(
 				},
 				{ new: true }
 			);
-			if (!room) {
-				return res.status(400).json({ message: 'room not found' });
+
+			if (!updatedRoom) {
+				return res.status(400).json({ message: 'Room not found' });
 			}
-			await room.save();
-			// res.status(200).send();
-			res.redirect('http://localhost:5174/successful-booking');
+
+			// Associate room with hotel
+			const updatedHotel = await Hotel.findByIdAndUpdate(
+				req.params.hotelId,
+				{ $push: { rooms: updatedRoom } },
+				{ new: true }
+			);
+
+			if (!updatedHotel) {
+				return res.status(400).json({ message: 'Hotel not found' });
+			}
+
+			// Redirect to success page
+			return res.redirect('http://localhost:5174/successful-booking');
 		} catch (error) {
-			console.log(error);
-			res.status(500).json({ message: 'something went wrong' });
+			console.error(error);
+			return res.status(500).json({ message: 'Something went wrong' });
 		}
 	}
 );
