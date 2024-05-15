@@ -5,7 +5,6 @@ import {
 	HotelType,
 	UserType,
 	RoomType,
-	BookingType,
 	BookingWithHotelType,
 } from '../../backend/src/shared/types';
 // import { BookingFormData } from './forms/BookingForm/BookingForm';
