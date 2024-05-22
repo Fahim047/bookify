@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import SignOutButton from './SignOutButton';
 import { useQuery } from 'react-query';
@@ -7,22 +7,16 @@ import * as apiClient from '../api-client';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 const Header = () => {
-	const { isLoggedIn, showToast } = useAppContext();
+	const { isLoggedIn } = useAppContext();
+	const [dropdownOpen, setDropdownOpen] = useState(false);
+
 	const { data: currentUser } = useQuery(
 		'fetchCurrentUser',
 		apiClient.fetchCurrentUser
 	);
-	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const navigate = useNavigate();
 
 	const handleToggleDropdown = () => {
 		setDropdownOpen(!dropdownOpen);
-	};
-
-	const handleSignOut = () => {
-		// Logic for signing out the user
-		showToast({ message: 'Signed out successfully!', type: 'SUCCESS' });
-		navigate('/sign-out');
 	};
 
 	return (
