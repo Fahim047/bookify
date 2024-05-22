@@ -23,6 +23,7 @@ import EditRoom from './pages/EditRoom';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentFailed from './pages/PaymentFailed';
 import Reservations from './pages/Reservations';
+import EditProfile from './pages/EditProfile';
 
 const App = () => {
 	const { isLoggedIn } = useAppContext();
@@ -54,6 +55,14 @@ const App = () => {
 					}
 				/>
 				<Route
+					path="/room-detail/:roomId"
+					element={
+						<Layout>
+							<RoomDetails />
+						</Layout>
+					}
+				/>
+				<Route
 					path="/register"
 					element={
 						<Layout>
@@ -72,6 +81,14 @@ const App = () => {
 
 				{isLoggedIn && (
 					<>
+						<Route
+							path="/update-profile"
+							element={
+								<Layout>
+									<EditProfile />
+								</Layout>
+							}
+						/>
 						<Route
 							path="/hotel/:hotelId/booking/:roomId"
 							element={
@@ -134,14 +151,6 @@ const App = () => {
 							element={
 								<Layout>
 									<MyBookings />
-								</Layout>
-							}
-						/>
-						<Route
-							path="/room-detail/:roomId"
-							element={
-								<Layout>
-									<RoomDetails />
 								</Layout>
 							}
 						/>

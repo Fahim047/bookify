@@ -128,6 +128,23 @@ export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
 	return response.json();
 };
 
+export const updateProfile = async (userFormData: RegisterFormData) => {
+	const response = await fetch(`${API_BASE_URL}/api/users/update-profile`, {
+		method: 'PUT',
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(userFormData),
+	});
+
+	if (!response.ok) {
+		throw new Error('Failed to update profile!!!');
+	}
+	// console.log(response);
+
+	return response.json();
+};
 export const updateMyHotelById = async (hotelFormData: FormData) => {
 	const response = await fetch(
 		`${API_BASE_URL}/api/my-hotels/${hotelFormData.get('hotelId')}`,
@@ -242,47 +259,6 @@ export const fetchRoomById = async (roomId: string): Promise<RoomType> => {
 
 	return response.json();
 };
-
-// export const createPaymentIntent = async (
-// 	roomId: string,
-// 	numberOfNights: string
-// ): Promise<PaymentIntentResponse> => {
-// 	const response = await fetch(
-// 		`${API_BASE_URL}/api/rooms/${roomId}/bookings/payment-intent`,
-// 		{
-// 			credentials: 'include',
-// 			method: 'POST',
-// 			body: JSON.stringify({ numberOfNights }),
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 		}
-// 	);
-
-// 	if (!response.ok) {
-// 		throw new Error('Error fetching payment intent');
-// 	}
-
-// 	return response.json();
-// };
-
-// export const createRoomBooking = async (formData: BookingFormData) => {
-// 	const response = await fetch(
-// 		`${API_BASE_URL}/api/rooms/${formData.hotelId}/bookings/${formData.roomId}/pay`,
-// 		{
-// 			method: 'POST',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 			credentials: 'include',
-// 			body: JSON.stringify(formData),
-// 		}
-// 	);
-
-// 	if (!response.ok) {
-// 		throw new Error('Error booking room');
-// 	}
-// };
 
 export const fetchMyBookings = async (): Promise<BookingWithHotelType[]> => {
 	const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {

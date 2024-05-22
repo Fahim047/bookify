@@ -74,4 +74,39 @@ router.post(
 	}
 );
 
+router.put(
+	'/update-profile',
+	verifyToken,
+	async (req: Request, res: Response) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ message: errors.array() });
+		}
+
+		try {
+			const userId = req.userId; // Assuming authenticate middleware adds userId to the request object
+			const { firstName, lastName, email, phoneNumber } = req.body;
+
+			let user = await User.findById(userId);
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' });
+			}
+
+			if (firstName) user.firstName = firstName;
+			if (lastName) user.lastName = lastName;
+			if (email) user.email = email;
+			if (phoneNumber) user.phoneNumber = phoneNumber;
+
+			await user.save();
+
+			return res
+				.status(200)
+				.send({ message: 'User updated successfully' });
+		} catch (error) {
+			console.log(error);
+			res.status(500).send({ message: 'Something went wrong' });
+		}
+	}
+);
+
 export default router;
