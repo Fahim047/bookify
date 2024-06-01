@@ -5,10 +5,8 @@ import Hotel, { Booking, Room } from '../models/hotel';
 import verifyToken from '../middleware/auth';
 import { body } from 'express-validator';
 import { BookingType, RoomType } from '../shared/types';
-import Stripe from 'stripe';
 import { ObjectId } from 'mongodb';
 const SSLCommerzPayment = require('sslcommerz-lts');
-const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 const router = express.Router();
 
 const store_id = process.env.SSL_COMMERZ_STORE_ID || '';
@@ -111,12 +109,10 @@ router.put(
 	async (req: Request, res: Response) => {
 		try {
 			const updatedRoom: RoomType = req.body;
-			// updatedRoom.lastUpdated = new Date();
 
 			const room = await Room.findOneAndUpdate(
 				{
 					_id: req.params.roomId,
-					// hotelId: req.params.hotelId,
 				},
 				updatedRoom,
 				{ new: true }
@@ -145,7 +141,6 @@ router.put(
 router.post(
 	'/:hotelId/bookings/:roomId/book-now',
 	async (req: Request, res: Response) => {
-		console.log(req.body);
 		const tran_id = new ObjectId().toString();
 		const data = {
 			total_amount: req.body.totalCost,
@@ -153,8 +148,8 @@ router.post(
 			tran_id, // use unique tran_id for each api call
 			success_url: `http://localhost:7000/api/rooms/${req.params.hotelId}/bookings/${req.params.roomId}/payment/success/${tran_id}`,
 			fail_url: `http://localhost:7000/api/rooms/${req.params.hotelId}/bookings/${req.params.roomId}/payment/failed/${tran_id}`,
-			cancel_url: 'http://localhost:3030/cancel',
-			ipn_url: 'http://localhost:3030/ipn',
+			cancel_url: 'http://localhost:7000/cancel',
+			ipn_url: 'http://localhost:7000/ipn',
 			shipping_method: 'Courier',
 			product_name: 'Computer.',
 			product_category: 'Electronic',
@@ -186,14 +181,12 @@ router.post(
 			console.log('Redirecting to: ', GatewayPageURL);
 		});
 
-		// console.log(data);
-
 		const newBooking: BookingType = {
 			...req.body,
 			paymentStatus: false,
 			transactionId: tran_id,
 		};
-		console.log(newBooking);
+
 		const tempBooking = await Booking.create(newBooking);
 		if (!tempBooking) {
 			return res
@@ -202,64 +195,6 @@ router.post(
 		}
 	}
 );
-// router.post(
-// 	'/:hotelId/bookings/:roomId/payment/success/:tranId',
-// 	async (req, res) => {
-// 		// console.log(req.params.tranId, req.params.hotelId, req.params.roomId);
-// 		try {
-// 			const updatedBooking = await Booking.updateOne(
-// 				{
-// 					transactionId: req.params.tranId,
-// 				},
-// 				{
-// 					$set: {
-// 						paymentStatus: true,
-// 					},
-// 				},
-// 				{ new: true }
-// 			);
-// 			if (!booking) {
-// 				return res.status(400).json({ message: 'booking not created' });
-// 			}
-// 			const newBooking = await Booking.findOne({
-// 				transactionId: req.params.tranId,
-// 				paymentStatus: true,
-// 			});
-// 			console.log(newBooking);
-// 			const room = await Room.findOneAndUpdate(
-// 				{ _id: req.params.roomId },
-// 				{
-// 					$push: {
-// 						bookings: newBooking,
-// 						alreadyBooked: {
-// 							checkIn: newBooking?.checkIn,
-// 							checkOut: newBooking?.checkOut,
-// 						},
-// 					},
-// 				},
-// 				{ new: true }
-// 			);
-// 			const hotel = await Hotel.findOneAndUpdate(
-// 				{ _id: req.params.hotelId },
-// 				{
-// 					$push: {
-// 						rooms: room,
-// 					},
-// 				},
-// 				{ new: true }
-// 			);
-// 			if (!room) {
-// 				return res.status(400).json({ message: 'room not found' });
-// 			}
-// 			await room.save();
-// 			// res.status(200).send();
-// 			res.redirect('http://localhost:5174/successful-booking');
-// 		} catch (error) {
-// 			console.log(error);
-// 			res.status(500).json({ message: 'something went wrong' });
-// 		}
-// 	}
-// );
 
 router.post(
 	'/:hotelId/bookings/:roomId/payment/success/:tranId',

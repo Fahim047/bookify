@@ -13,7 +13,6 @@ function EditProfileForm() {
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = formMethods;
 
@@ -160,61 +159,6 @@ function EditProfileForm() {
 						</span>
 					)}
 				</div>
-
-				{/* <div className="mb-4">
-					<label
-						htmlFor="password"
-						className="text-sm font-bold text-gray-700"
-					>
-						Password
-					</label>
-					<input
-						id="password"
-						type="password"
-						className="w-full border rounded py-2 px-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500"
-						{...register('password', {
-							required: 'This field is required',
-							minLength: {
-								value: 6,
-								message:
-									'Password must be at least 6 characters',
-							},
-						})}
-					/>
-					{errors.password && (
-						<span className="text-red-500 text-xs">
-							{errors.password.message}
-						</span>
-					)}
-				</div> */}
-				{/* 
-				<div className="mb-6">
-					<label
-						htmlFor="confirmPassword"
-						className="text-sm font-bold text-gray-700"
-					>
-						Confirm Password
-					</label>
-					<input
-						id="confirmPassword"
-						type="password"
-						className="w-full border rounded py-2 px-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500"
-						{...register('confirmPassword', {
-							validate: (val) => {
-								if (!val) {
-									return 'This field is required';
-								} else if (watch('password') !== val) {
-									return 'Your passwords do not match';
-								}
-							},
-						})}
-					/>
-					{errors.confirmPassword && (
-						<span className="text-red-500 text-xs">
-							{errors.confirmPassword.message}
-						</span>
-					)}
-				</div> */}
 
 				<button
 					type="submit"

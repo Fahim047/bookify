@@ -4,8 +4,8 @@ type Props = {
 	checkIn: Date;
 	checkOut: Date;
 	numberOfNights: number;
-	hotel: HotelType;
-	room: RoomType;
+	hotel?: HotelType;
+	room?: RoomType;
 };
 
 const BookingDetailsSummary = ({
@@ -21,11 +21,11 @@ const BookingDetailsSummary = ({
 
 			<div className="border-b py-2">
 				Hotel Name: &nbsp;
-				<span className="font-bold">{`${hotel.name}`}</span>
+				<span className="font-bold">{`${hotel?.name}`}</span>
 			</div>
 			<div className="border-b py-2">
 				Room Number: &nbsp;
-				<span className="font-bold">{`${room.roomNumber}`}</span>
+				<span className="font-bold">{`${room?.roomNumber}`}</span>
 			</div>
 			<div className="flex justify-between">
 				<div>
