@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 export type UserType = {
 	_id: string;
 	email: string;
@@ -50,8 +48,8 @@ export type BookingType = {
 	checkIn: Date;
 	checkOut: Date;
 	totalCost: number;
-	roomId: mongoose.Schema.Types.ObjectId;
-	hotelId: mongoose.Schema.Types.ObjectId;
+	roomId: RoomType;
+	hotelId: HotelType;
 	transactionId: string;
 	paymentStatus: boolean;
 };

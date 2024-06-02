@@ -13,12 +13,12 @@ const bookingSchema = new mongoose.Schema<BookingType>({
 	totalCost: { type: Number, required: true },
 	roomId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Room',
+		ref: 'Room', // Forward reference to Room schema
 		required: true,
 	},
 	hotelId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Hotel',
+		ref: 'Hotel', // Forward reference to Hotel schema
 		required: true,
 	},
 	transactionId: { type: String },
