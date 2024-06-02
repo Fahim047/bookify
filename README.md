@@ -1,3 +1,3 @@
 # Bookify: Online Hotel Booking Platform
 
-[Bookify.com](https://bookify-vdcu.onrender.com)
+[Bookify.com](https://bookify-d2yy.onrender.com)
