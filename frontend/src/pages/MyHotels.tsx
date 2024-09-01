@@ -12,8 +12,18 @@ const MyHotels = () => {
 		}
 	);
 
-	if (!hotelData) {
-		return <span>No Hotels found</span>;
+	if (!hotelData || hotelData.length === 0) {
+		return (
+			<div className="text-center space-y-5">
+				<p className="text-2xl">You didn't add any hotels yet.</p>
+				<Link
+					to="/add-hotel"
+					className="inline-block bg-blue-600 text-white text-xl font-bold py-2 px-4 hover:bg-blue-500"
+				>
+					Add Hotel
+				</Link>
+			</div>
+		);
 	}
 
 	return (

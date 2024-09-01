@@ -34,12 +34,12 @@ const Header = () => {
 							>
 								My Bookings
 							</Link>
-							<Link
+							{/* <Link
 								className="inline-block px-6 py-2 text-sm font-medium text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition duration-300 ease-in-out"
 								to="/my-hotels"
 							>
 								My Hotels
-							</Link>
+							</Link> */}
 							<div className="relative inline-block">
 								<button
 									onClick={handleToggleDropdown}
@@ -53,10 +53,16 @@ const Header = () => {
 								{dropdownOpen && (
 									<div className="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl">
 										<Link
-											to="/edit-profile"
+											to="/update-profile"
 											className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-600 hover:text-white"
 										>
-											Edit Profile
+											Update Profile
+										</Link>
+										<Link
+											to="/my-hotels"
+											className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-600 hover:text-white"
+										>
+											My Hotels
 										</Link>
 										<SignOutButton />
 									</div>
